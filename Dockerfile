@@ -2,17 +2,18 @@ FROM python:3-alpine
 
 WORKDIR /app
 
-COPY requirements.txt ./
+# Install build dependencies
+RUN apk add --no-cache build-base cmake
 
-# build dependencies
-RUN set -x \
-    && apk add --no-cache --virtual .build-deps gcc musl-dev libffi-dev olm-dev \
-    && pip install --no-cache-dir -r requirements.txt \
-    && apk del .build-deps
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# runtime dependeincies
-RUN set -x \
-    && apk add --no-cache olm
+# Cleanup
+RUN rm -rf /var/cache/apk/*
+
+# Install runtime dependencies
+RUN apk add --no-cache olm
 
 EXPOSE 8000
 

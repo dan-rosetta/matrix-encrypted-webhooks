@@ -33,6 +33,11 @@ class WebhookServer:
             known_rooms.add(self.KNOWN_TOKENS[token]['room'])
 
         return known_rooms
+    def list_known_tokens(self) -> dict:
+        """
+        Returns a dictionary containing the known tokens along with their associated room and app name.
+        """
+        return self.KNOWN_TOKENS
 
     def _format_message(self, msg_format: str, allow_unicode: bool, data) -> str:
         if msg_format == 'json':
@@ -87,7 +92,12 @@ class WebhookServer:
         return web.json_response({'success': True})
 
     async def run(self, matrix_client: E2EEClient) -> None:
-        self.matrix_client = matrix_client
+        webhook_server = WebhookServer()
+        known_tokens = webhook_server.list_known_tokens()
+        logging.info(f"Known Tokens:")
+        for token, details in known_tokens.items():
+            logging.info(f"Token: {token}, Room: {details['room']}, App Name: {details['app_name']}")
+            self.matrix_client = matrix_client
         app = web.Application()
 
         app.router.add_get('/', self._get_index)
@@ -104,3 +114,6 @@ class WebhookServer:
 
         logging.info('The web server is waiting for events.')
         await site.start()
+
+
+

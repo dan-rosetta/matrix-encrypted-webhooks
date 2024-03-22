@@ -112,8 +112,8 @@ class E2EEClient:
         if not self.greeting_sent:
             self.greeting_sent = True
 
-            greeting = f"Hi, I'm up and runnig from **{os.environ['MATRIX_DEVICE']}**, waiting for webhooks!"
-            await self.send_message(greeting, os.environ['MATRIX_ADMIN_ROOM'], 'Webhook server')
+            greeting = f"Hi Team , I'm up and runnig from , waiting for dms :)!"
+            await self.send_message(greeting, os.environ['MATRIX_ADMIN_ROOM'], 'Rosetta Bot')
 
     async def send_message(
         self,
@@ -127,7 +127,7 @@ class E2EEClient:
 
         msg_prefix = ""
         if os.environ['DISPLAY_APP_NAME'] == 'True':
-            msg_prefix = f"**{sender}** says:  \n"
+            msg_prefix = f"{sender} says:  \n"
 
         content = {
             'msgtype': 'm.text',
