@@ -127,11 +127,11 @@ class E2EEClient:
 
         msg_prefix = ""
         if os.environ['DISPLAY_APP_NAME'] == 'True':
-            msg_prefix = f"================================================ \n{sender} says:  \n ================================================ \n"
+            msg_prefix = f"\n{sender} says:  \n                                            \n"
 
         content = {
             'msgtype': 'm.text',
-            'body': f"{msg_prefix}{message} \n ================================================ \n",
+            'body': f"{msg_prefix}{message} \n                                             \n",
         }
         if os.environ['USE_MARKDOWN'] == 'True':
             # Markdown formatting removes YAML newlines if not padded with spaces,
